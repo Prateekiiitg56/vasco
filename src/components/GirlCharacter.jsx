@@ -19,6 +19,17 @@ import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js'
  *
  * Phase B (Scroll Scrub):
  *   Locks at finalPosition & finalScale, scrubbing animation time with scroll.
+ *
+ * ── Baked-in clip ──────────────────────────────────────────────
+ * The single animation baked into girl-character.glb ("Armature|mixamo.com|
+ * Layer0", ~2.37s) IS a Chapa Giratória-style spinning kick — verified by
+ * sampling bone world-positions: the trailing foot rises above hip height
+ * at t ≈ 1.87s (~79% through the clip). Since scrollProgress maps linearly
+ * to clip time, that kick apex lands at ~79% of total page scroll — inside
+ * "04 — Culture" ("Worn By The Bold"), just before the final section.
+ * The loose Chapa_Giratoria_2.fbx in the repo root is the leftover source
+ * file this clip was originally built from — it is not loaded anywhere in
+ * the app and can be deleted to shrink the repo.
  */
 
 const MODEL_PATH = '/assets/girl-character.glb'
