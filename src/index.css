@@ -1,0 +1,472 @@
+/* ============================================================
+   GLOBAL STYLES — VASCO Sneaker Brand Website
+   ============================================================ */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Colors — dark, bold, with fiery orange/amber accents */
+  --bg-primary: #080808;
+  --bg-secondary: #111111;
+  --bg-card: rgba(20, 20, 20, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --bg-glass-hover: rgba(255, 255, 255, 0.07);
+
+  --text-primary: #f5f5f5;
+  --text-secondary: rgba(245, 245, 245, 0.55);
+  --text-muted: rgba(245, 245, 245, 0.3);
+
+  --accent-primary: #ff6b2c;       /* fiery orange */
+  --accent-secondary: #ff8f5e;     /* warm peach */
+  --accent-warm: #ffb347;          /* amber gold */
+  --accent-cool: #e8e8e8;          /* clean white */
+  --accent-glow: rgba(255, 107, 44, 0.25);
+
+  --gradient-hero: linear-gradient(135deg, #ff6b2c 0%, #ff8f5e 50%, #ffb347 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(255,107,44,0.12) 0%, rgba(255,179,71,0.06) 100%);
+  --gradient-text: linear-gradient(90deg, #ff6b2c, #ffb347, #ff6b2c);
+
+  /* Typography */
+  --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --section-padding: clamp(2rem, 5vw, 6rem);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: 0.2s var(--ease-out-expo);
+  --transition-medium: 0.4s var(--ease-out-expo);
+  --transition-slow: 0.8s var(--ease-out-expo);
+
+  /* Border */
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.06);
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 32px;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-warm);
+}
+
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* --- Spline Canvas Layer --- */
+.spline-canvas-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.spline-canvas-wrapper canvas,
+.spline-canvas-wrapper > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* --- Scrollable Content Layer --- */
+.scroll-content {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* --- Section --- */
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: var(--section-padding);
+  pointer-events: none;
+}
+
+.section-inner {
+  max-width: 660px;
+  pointer-events: auto;
+}
+
+/* Alternate sections: left vs right */
+.section:nth-child(odd) .section-inner {
+  margin-right: auto;
+}
+
+.section:nth-child(even) .section-inner {
+  margin-left: auto;
+  text-align: right;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 1.25rem;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--gradient-hero);
+  border-radius: 1px;
+}
+
+.section:nth-child(even) .section-label {
+  flex-direction: row-reverse;
+}
+
+.section-heading {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 200% center; }
+}
+
+.section-description {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+}
+
+.section-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  background: var(--gradient-hero);
+  color: var(--bg-primary);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.section-cta:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 32px var(--accent-glow), 0 0 60px rgba(255,107,44,0.12);
+}
+
+.section-cta:hover::before {
+  opacity: 1;
+}
+
+.section-cta:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.section-cta svg {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--transition-fast);
+}
+
+.section-cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* --- Glass Card --- */
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--border-subtle);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  transition: background var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.glass-card:hover {
+  background: var(--bg-glass-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px var(--accent-glow);
+}
+
+/* --- Loading Screen --- */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  gap: 2.5rem;
+}
+
+.loading-logo {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.loading-bar-track {
+  width: min(320px, 80vw);
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: var(--gradient-hero);
+  border-radius: 2px;
+  transition: width 0.3s var(--ease-out-expo);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.loading-percentage {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* --- Navigation Dots --- */
+.nav-dots {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  position: relative;
+}
+
+.nav-dot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-primary);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all var(--transition-medium);
+}
+
+.nav-dot.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.nav-dot.active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-dot:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-dot-label {
+  position: absolute;
+  right: calc(100% + 16px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-dot:hover .nav-dot-label,
+.nav-dot.active .nav-dot-label {
+  opacity: 1;
+}
+
+.nav-dot.active .nav-dot-label {
+  color: var(--accent-primary);
+}
+
+/* --- Scroll Indicator --- */
+.scroll-indicator {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 1;
+  transition: opacity var(--transition-slow);
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scroll-indicator-text {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-indicator-line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, var(--accent-primary), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .section {
+    align-items: flex-end;
+    padding-bottom: 3rem;
+  }
+
+  .section-inner {
+    max-width: 100%;
+  }
+
+  .section:nth-child(even) .section-inner {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .section:nth-child(even) .section-label {
+    flex-direction: row;
+  }
+
+  .nav-dots {
+    right: 1rem;
+    gap: 12px;
+  }
+
+  .nav-dot-label {
+    display: none;
+  }
+
+  .section-heading {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
