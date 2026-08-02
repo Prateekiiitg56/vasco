@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen.jsx'
 import SneakerScrollSequence from './components/SneakerScrollSequence.jsx'
+import CloudsBackground from './components/CloudsBackground.jsx'
 import Header from './components/Header.jsx'
 import Section from './components/Section.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
@@ -90,6 +91,9 @@ export default function App() {
     <>
       {/* Loading Screen */}
       <LoadingScreen progress={loadProgress} isVisible={isLoading} />
+
+      {/* Vanta CLOUDS Ambient Background Layer */}
+      <CloudsBackground isMobile={isMobile} />
 
       {/* Brand Header */}
       {!isLoading && <Header />}

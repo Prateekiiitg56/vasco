@@ -106,6 +106,16 @@ body::after {
   mix-blend-mode: overlay;
 }
 
+/* --- Vanta CLOUDS Background Layer --- */
+.vanta-clouds-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
 /* --- Sneaker Sequence Layer System --- */
 .sneaker-sequence-wrapper {
   position: fixed;
