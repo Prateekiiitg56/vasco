@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ThreeCharacterScene from './components/ThreeCharacterScene.jsx'
 import LoadingScreen from './components/LoadingScreen.jsx'
+import SneakerScrollSequence from './components/SneakerScrollSequence.jsx'
+import Header from './components/Header.jsx'
 import Section from './components/Section.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 
@@ -12,28 +13,28 @@ import useScrollProgress from './hooks/useScrollProgress.js'
 // 📝 Section content — VASCO sneaker brand
 const SECTIONS = [
   {
-    label: '01 — Drop',
+    label: '01 - Drop',
     heading: 'Move\nDifferent.',
-    description: "VASCO isn't just a sneaker — it's a statement. Born from the streets, crafted for the culture. Every step you take tells your story.",
+    description: "VASCO isn't just a sneaker - it's a statement. Born from the streets, crafted for the culture. Every step you take tells your story.",
     ctaText: 'Shop the Drop',
     ctaHref: '#section-1',
   },
   {
-    label: '02 — Collection',
+    label: '02 - Collection',
     heading: 'The New\nLineup',
     description: "From the minimalist Vasco Air to the bold Vasco Fury, our 2026 collection blends cutting-edge materials with timeless silhouettes. Lightweight, breathable, and built to turn heads.",
     ctaText: 'View Collection',
     ctaHref: '#section-2',
   },
   {
-    label: '03 — Craft',
+    label: '03 - Craft',
     heading: 'Built By\nHand',
-    description: "Every pair is assembled with precision — hand-stitched uppers, injected EVA midsoles, and sustainably sourced materials. We obsess over every detail so your feet never have to compromise.",
+    description: "Every pair is assembled with precision - hand-stitched uppers, injected EVA midsoles, and sustainably sourced materials. We obsess over every detail so your feet never have to compromise.",
   },
   {
-    label: '04 — Culture',
+    label: '04 - Culture',
     heading: 'Worn By\nThe Bold',
-    description: "From Tokyo street style to New York studio sessions — VASCO lives where creativity happens. Join a community of artists, athletes, and originals who refuse to blend in.",
+    description: "From Tokyo street style to New York studio sessions - VASCO lives where creativity happens. Join a community of artists, athletes, and originals who refuse to blend in.",
     ctaText: 'Our Stories',
     ctaHref: '#',
   },
@@ -67,23 +68,14 @@ export default function App() {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  // --- Loading: show brand intro while Three.js scene initialises ---
-  useEffect(() => {
-    if (!isLoading) return
+  // --- Loading: driven by real frame-preload progress ---
+  const handleLoadProgress = useCallback((pct) => {
+    setLoadProgress(pct)
+  }, [])
 
-    let p = 0
-    const interval = setInterval(() => {
-      p += 2
-      setLoadProgress(Math.min(p, 90))
-      if (p >= 90) clearInterval(interval)
-    }, 30)
-    return () => clearInterval(interval)
-  }, [isLoading])
-
-  // --- Called by ThreeCharacterScene when the Canvas is ready ---
-  const handleSceneLoaded = useCallback(() => {
+  const handleLoaded = useCallback(() => {
     setLoadProgress(100)
-    setTimeout(() => setIsLoading(false), 500)
+    setTimeout(() => setIsLoading(false), 400)
   }, [])
 
   // --- Scroll to section ---
@@ -99,11 +91,13 @@ export default function App() {
       {/* Loading Screen */}
       <LoadingScreen progress={loadProgress} isVisible={isLoading} />
 
-      {/* 3D Character Scene (React Three Fiber) */}
-      <ThreeCharacterScene
-        progress={progress}
-        activeSection={activeSection}
-        onLoaded={handleSceneLoaded}
+      {/* Brand Header */}
+      {!isLoading && <Header />}
+
+      {/* Sneaker Image Sequence — the only light source */}
+      <SneakerScrollSequence
+        onLoadProgress={handleLoadProgress}
+        onLoaded={handleLoaded}
       />
 
       {/* Navigation Dots */}
@@ -130,11 +124,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Scroll Indicator */}
-      <div className={`scroll-indicator ${activeSection > 0 ? 'hidden' : ''}`}>
-        <span className="scroll-indicator-text">Scroll to explore</span>
-        <div className="scroll-indicator-line" />
-      </div>
+
 
       {/* Scrollable Section Content */}
       <div className="scroll-content">
